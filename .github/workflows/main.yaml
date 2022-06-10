@@ -28,6 +28,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/efrei-tp2-devops:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/efrei-tp2-devops:1.0.0
 
   
