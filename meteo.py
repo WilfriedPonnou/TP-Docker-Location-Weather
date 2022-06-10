@@ -1,22 +1,27 @@
-import requests, json, os
- 
-# Enter your API key here
-api_key = str(os.environ.get("API_KEY"))
-latitude = str(os.environ.get("LAT"))
-longitude = str(os.environ.get("LONG"))
- 
-# base_url variable to store url
-url = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_key}".format(lat=latitude,lon=longitude,API_key=api_key)
- 
+from flask import Flask,request
+import os,requests
 
- 
-# get method of requests module
-# return response object
-response = requests.get(url)
- 
-# json method of response object
-# convert json format data into
-# python format data
-x = response.json()
- 
-print(x)
+
+app = Flask(__name__)
+@app.route('/', methods =['GET'])
+def home():
+
+    api_key = str(os.environ.get("API_KEY"))
+    latitude = request.args.get("lat")
+    longitude = request.args.get("lon")
+    
+    # base_url variable to store url
+    url = "https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API_key}".format(lat=latitude,lon=longitude,API_key=api_key)
+    
+
+    response = requests.get(url)
+
+    data = response.json()
+    
+    html_data = f"""
+    <p>{data}</p>
+    """
+    return html_data
+
+if __name__ == "__main__":
+    app.run(port = 8081,debug=True)
